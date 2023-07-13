@@ -1,0 +1,11 @@
+version: '3'
+services:
+  publicip-manager-api:
+    container_name: publicip-manager-api
+    image: publicipmanagerapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8080:8080
