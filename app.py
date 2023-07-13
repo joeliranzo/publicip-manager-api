@@ -1,5 +1,7 @@
 import subprocess
-from flask import Flask, jsonify, request
+
+import requests
+from flask import Flask, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -16,7 +18,7 @@ def add_cors_headers(response):
 def ping():
     return jsonify({'message': 'pong'})
 
-@app.route('/ip', methods=['GET'])
+@app.route('/jsonip', methods=['GET'])
 def ip():
 	command = "curl ifconfig.me"
 
@@ -30,7 +32,11 @@ def ip():
 	if error:
 		return jsonify({'error': error.decode('utf-8')})
   
-	
+
+@app.route('/ip')
+def get_public_ip():
+    response = requests.get('https://api.ipify.org')
+    return response.text	
 
 if __name__ == '__main__':
     app.run()
